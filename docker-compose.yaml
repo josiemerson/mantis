@@ -1,0 +1,25 @@
+mantisbt:
+  image: vimagick/mantisbt:latest
+  container_name: mantisbt
+  ports:
+    - "8989:80"
+  volumes:
+    - ./config:/var/www/html/config
+  links:
+    - mysql
+  restart: always
+
+mysql:
+  image: mysql:5.7
+  container_name: mysql
+  volumes:
+    - ./data:/var/lib/mysql
+  environment:
+    - MYSQL_ROOT_PASSWORD=root
+    - MYSQL_DATABASE=bugtracker
+    - MYSQL_USER=mantisbt
+    - MYSQL_PASSWORD=mantisbt
+  ports:
+    - "3306:3306"
+    - "33060:33060"
+  restart: always
